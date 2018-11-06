@@ -1,0 +1,29 @@
+SHOW TABLES;
+
+DROP TABLE users;
+
+CREATE TABLE users (
+  id                    BIGINT    AUTO_INCREMENT UNIQUE                  NOT NULL,
+  username              VARCHAR(50) UNIQUE                               NOT NULL,
+  password              VARCHAR(50)                                      NOT NULL,
+  gender                ENUM ('F', 'M'),
+  age                   INT CHECK (users.age > 0),
+  sign                  VARCHAR(50),
+  address               VARCHAR(50),
+  mobile                VARCHAR(20),
+  validate              BOOL      DEFAULT TRUE,
+  registration_platform VARCHAR(10),
+  registration_time     TIMESTAMP DEFAULT current_timestamp()
+);
+
+CREATE TABLE tokens (
+  id     BIGINT AUTO_INCREMENT UNIQUE   NOT NULL,
+  userid BIGINT,
+  token  VARCHAR(50),
+  FOREIGN KEY (userid) REFERENCES users (id)
+);
+
+INSERT INTO tokens (userid, token) VALUES ((
+                                             SELECT id
+                                             FROM users
+                                             WHERE username = "u1" AND password = "p3"), "token");
