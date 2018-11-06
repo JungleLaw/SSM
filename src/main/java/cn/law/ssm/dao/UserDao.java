@@ -21,7 +21,11 @@ public class UserDao extends BaseDao {
 
     public User signup(User user) {
         user.setToken(TokenGenerator.retreive());
-        getSqlSession().insert(UserDao.class.getName() + ".signup", user);
-        return user;
+        int result = getSqlSession().insert(UserDao.class.getName() + ".signup", user);
+        System.out.println("result = " + result);
+        if (result > 0) {
+            return user;
+        }
+        return null;
     }
 }
