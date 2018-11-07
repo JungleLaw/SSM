@@ -17,18 +17,18 @@ public class UserActionController {
     private UserDao userDao;
 
     @RequestMapping(value = "/insert", method = RequestMethod.GET)
-//    private String insert(@RequestParam User user) {
-    private String insert() {
+    private String insert(User user) {
+//    private String insert() {
 //        System.out.println(user);
-        User u = new User();
-        u.setUsername("u1");
-        u.setPassword("p3");
-        u.setAddress("a3");
-        u.setAge(1);
-        u.setGender("M");
-        u.setValidate(true);
-        u.setRegistration_platform("web");
-        userDao.insertUser(u);
+//        User u = new User();
+//        u.setUsername("u1");
+//        u.setPassword("p3");
+//        u.setAddress("a3");
+//        u.setAge(1);
+//        u.setGender("M");
+//        u.setValidate(true);
+//        u.setRegistration_platform("web");
+        userDao.insertUser(user);
         return "success";
     }
 
@@ -52,5 +52,14 @@ public class UserActionController {
         return userDao.signup(user);
     }
 
+    @RequestMapping("/checkExist")
+    private String checkExist(User user) {
+        System.out.println(checkExist2(user));
+        return "success";
+    }
+
+    private boolean checkExist2(User u) {
+        return userDao.checkExist(u.getUsername());
+    }
 
 }
